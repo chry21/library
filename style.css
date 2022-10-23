@@ -54,3 +54,33 @@ footer {
 #github-logo:hover {
     transform: rotate(360deg) scale(1.1);
 }
+
+/*FORM CONTAINER*/
+
+#modal-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+    background-color: rgb(30, 29, 29);
+    border-radius: 20px;   
+    z-index: 1;
+}
+
+#form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#form-container input {
+    height: 30px;
+    width: 200px;
+}
