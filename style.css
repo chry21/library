@@ -56,6 +56,22 @@ footer {
     transform: rotate(360deg) scale(1.1);
 }
 
+/*GRID CONTAINER*/
+
+#grid-container {
+    margin-left: 30px;
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 350px));
+    gap: 30px;
+}
+
+#grid-container .bookDiv {
+    height: 300px;
+    background-color: rgb(30, 29, 29);
+    border-radius: 10px;
+}
+
 /*FORM CONTAINER*/
 
 #modal-container {
@@ -63,13 +79,12 @@ footer {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 25px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 300px;
-    height: 350px;
+    height: 400px;
     background-color: rgb(30, 29, 29);
     border-radius: 20px;   
     z-index: 1;
@@ -77,27 +92,42 @@ footer {
 
 #modal-container h1 {
     color: white;
+    margin-bottom: 30px;
 }
 
 #form-container {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 15px;
 }
 
 #form-container input {
     height: 30px;
     width: 250px;
-    background-color: rgb(30, 29, 29);
+    background: none;
     border: none;
     border-bottom: 1px solid black;
     padding-left: 10px;
     color: white;
     font-size: 1rem;
+    appearance: none;
 }
 
 #form-container input:focus {
     outline: none; 
+}
+
+#form-container select {
+    color: white;
+    height: 30px;
+    padding-left: 10px;
+    background-color: rgb(30, 29, 29);
+    border-color: rgb(88, 82, 82);
+    font-size: 1rem;
+}
+
+#form-container select:focus {
+    outline: none;
 }
 
 #form-container button {
@@ -106,4 +136,5 @@ footer {
     border: none;
     border-radius: 20px;
     font-size: 1.1rem;
+    margin-top: 15px;
 }
