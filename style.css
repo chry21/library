@@ -56,22 +56,6 @@ footer {
     transform: rotate(360deg) scale(1.1);
 }
 
-/*GRID CONTAINER*/
-
-#grid-container {
-    margin-left: 30px;
-    margin-top: 30px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 350px));
-    gap: 30px;
-}
-
-#grid-container .bookDiv {
-    height: 300px;
-    background-color: rgb(30, 29, 29);
-    border-radius: 10px;
-}
-
 /*FORM CONTAINER*/
 
 #modal-container {
@@ -137,4 +121,36 @@ footer {
     border-radius: 20px;
     font-size: 1.1rem;
     margin-top: 15px;
+}
+
+/*GRID CONTAINER*/
+
+#grid-container {
+    margin-left: 30px;
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 350px));
+    gap: 30px;
+}
+
+#grid-container .bookDiv {
+    height: 300px;
+    background-color: rgb(30, 29, 29);
+    border-radius: 20px;
+    display: grid;
+    grid-template-columns: 30px 30px;
+    grid-template-rows: repeat(5, 50px);
+    column-gap: 10px;
+    padding-left: 85px;
+    padding-top: 40px;
+
+}
+
+#grid-container img {
+    width: 30px;
+}
+
+#grid-container .infos {
+    color: white;
+    font-size: 1.4rem;
 }
