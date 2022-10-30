@@ -68,7 +68,7 @@ footer {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 300px;
-    height: 400px;
+    height: 370px;
     background-color: rgb(30, 29, 29);
     border-radius: 20px;   
     z-index: 1;
@@ -76,7 +76,7 @@ footer {
 
 #modal-container h1 {
     color: white;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 
 #form-container {
@@ -106,6 +106,7 @@ footer {
     height: 30px;
     padding-left: 10px;
     background-color: rgb(30, 29, 29);
+    border-radius: 10px;
     border-color: rgb(88, 82, 82);
     font-size: 1rem;
 }
@@ -114,7 +115,7 @@ footer {
     outline: none;
 }
 
-#form-container button {
+#form-container #submitBtn {
     height: 40px;
     background-color: rgb(13, 168, 13);
     border: none;
@@ -126,14 +127,14 @@ footer {
 /*GRID CONTAINER*/
 
 #grid-container {
-    margin-left: 30px;
+    margin-left: 25px;
     margin-top: 30px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 350px));
     gap: 30px;
 }
 
-#grid-container .bookDiv {
+#grid-container #bookDiv {
     height: 300px;
     background-color: rgb(30, 29, 29);
     border-radius: 20px;
@@ -144,10 +145,6 @@ footer {
     padding-top: 20px;
 }
 
-#grid-container img {
-    width: 30px;
-}
-
 #grid-container .infos {
     color: white;
     font-size: 1.3rem;
@@ -156,5 +153,43 @@ footer {
 #grid-container #bookTitle {
     font-size: 1.8rem;
     border-bottom: 1px solid white;
+}
+
+#grid-container #btnDiv {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+}
+
+#grid-container .bookBtns {
+    width: 50%;
+    height: 50px;
+    border: none;
+    background: transparent;
+}
+
+#grid-container #deleteBtn {
+    border-bottom-left-radius: 20px;
+}
+
+#grid-container #modifyBtn {
+    border-bottom-right-radius: 20px;
+}
+
+#grid-container img {
+    visibility: hidden;
+}
+
+#grid-container #bookDiv:hover img {
+    visibility: visible;
+}
+
+#grid-container #bookDiv #deleteBtn:hover {
+    background-color: rgb(255, 0, 0);
+}
+
+#grid-container #bookDiv #modifyBtn:hover {
+    background-color: rgb(22, 164, 4);
 }
 

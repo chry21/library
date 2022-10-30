@@ -1,11 +1,12 @@
 const addBtn = document.getElementById("add");
 
 const modal = document.getElementById("modal-container");
-const submitBtn = document.getElementById("submitBtn")
 const titleForm = document.getElementById("titleForm")
 const authorForm = document.getElementById("authorForm")
 const pagesForm = document.getElementById("pagesForm") 
 const genreForm = document.getElementById("genreForm")
+const statusForm = document.getElementById("statusForm")
+const submitBtn = document.getElementById("submitBtn")
 
 let myLibrary = [];
 
@@ -31,25 +32,16 @@ submitBtn.addEventListener("click", (event) => {
         event.preventDefault();
         modal.style.display = "none";
         displayBook();
+        cleanForm();
     } 
 })
 
 const gridContainer = document.getElementById("grid-container");
 
-const titleIcon = document.createElement("img");
-titleIcon.src = "imgs/title-icon.png";
-const authorIcon = document.createElement("img");
-authorIcon.src = "imgs/author-icon.png";
-const pagesIcon = document.createElement("img");
-pagesIcon.src = "imgs/pages-icon.png";
-const genreIcon = document.createElement("img");
-genreIcon.src = "imgs/genre-icon.png";
-const readingIcon = document.createElement("img");
-readingIcon.src = "imgs/reading-icon.png";
-
 function displayBook() {
+    //div
     const bookDiv = document.createElement("div");
-    bookDiv.classList.add("bookDiv");
+    bookDiv.setAttribute("id", "bookDiv");
     gridContainer.appendChild(bookDiv);
     addBookToLibrary();
 
@@ -80,9 +72,35 @@ function displayBook() {
 
     //status
     const status = document.createElement("p");
-    status.classList.add("infos")
+    status.classList.add("infos");
     status.textContent = `Status: ${statusForm.value}`;
-    bookDiv.appendChild(status)
+    bookDiv.appendChild(status);
+
+    //buttons div
+    const divBtn = document.createElement("div")
+    divBtn.setAttribute("id", "btnDiv");
+    bookDiv.appendChild(divBtn);
+
+    //delete button
+    const deleteBtn = document.createElement("button");
+    deleteBtn.classList.add("bookBtns");
+    deleteBtn.setAttribute("id", "deleteBtn");
+    deleteBtn.innerHTML = '<img src= "imgs/delete-icon.png">';
+    divBtn.appendChild(deleteBtn);
+
+    //modify button
+    const modifyBtn = document.createElement("button");
+    modifyBtn.classList.add("bookBtns");
+    modifyBtn.setAttribute("id", "modifyBtn");
+    modifyBtn.innerHTML = '<img src= "imgs/modify-icon.png">'
+    divBtn.appendChild(modifyBtn);
 }
 
+function cleanForm() {
+    titleForm.value = "";
+    authorForm.value = "";
+    pagesForm.value = "";
+    genreForm.value = "";
+    statusForm.value = "To read";
+}
   
