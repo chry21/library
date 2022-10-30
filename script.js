@@ -54,38 +54,34 @@ function displayBook() {
     addBookToLibrary();
 
     //title
-    bookDiv.appendChild(titleIcon)
     const title = document.createElement("p");
     title.classList.add("infos")
-    title.textContent = titleForm.value;
+    title.setAttribute("id", "bookTitle");
+    title.textContent = `"${titleForm.value}"`;
     bookDiv.appendChild(title)
 
     //author
-    bookDiv.appendChild(authorIcon)
     const author = document.createElement("p");
     author.classList.add("infos")
-    author.textContent = authorForm.value;
+    author.textContent = `Author: ${authorForm.value}`;
     bookDiv.appendChild(author)
 
     //pages
-    bookDiv.appendChild(pagesIcon)
     const pages = document.createElement("p");
     pages.classList.add("infos")
-    pages.textContent = pagesForm.value;
+    pages.textContent = `Pages: ${pagesForm.value}`;
     bookDiv.appendChild(pages)
 
     //genre
-    bookDiv.appendChild(genreIcon)
     const genre = document.createElement("p");
     genre.classList.add("infos")
-    genre.textContent = genreForm.value;
+    genre.textContent = `Genre: ${genreForm.value}`;
     bookDiv.appendChild(genre)
 
     //status
-    bookDiv.appendChild(readingIcon)
     const status = document.createElement("p");
     status.classList.add("infos")
-    status.textContent = statusForm.value;
+    status.textContent = `Status: ${statusForm.value}`;
     bookDiv.appendChild(status)
 }
 
