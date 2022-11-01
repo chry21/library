@@ -1,14 +1,4 @@
-const addBtn = document.getElementById("add");
-
-const modal = document.getElementById("modal-container");
-const titleForm = document.getElementById("titleForm")
-const authorForm = document.getElementById("authorForm")
-const pagesForm = document.getElementById("pagesForm") 
-const genreForm = document.getElementById("genreForm")
-const statusForm = document.getElementById("statusForm")
-const submitBtn = document.getElementById("submitBtn")
-
-let myLibrary = [];
+//Data structure
 
 function Book(title, author, pages, genre, status) {
     this.title = title;
@@ -18,62 +8,75 @@ function Book(title, author, pages, genre, status) {
     this.status = status;
 }
 
+//User interface
+
+const addBtn = document.getElementById("add");
+const gridContainer = document.getElementById("grid-container");
+
+const addBookModal = document.getElementById("modal-container");
+const addBookForm = document.getElementById("form-container");
+const titleForm = document.getElementById("titleForm")
+const authorForm = document.getElementById("authorForm")
+const pagesForm = document.getElementById("pagesForm") 
+const genreForm = document.getElementById("genreForm")
+const statusForm = document.getElementById("statusForm")
+const submitBtn = document.getElementById("submitBtn")
+
+let myLibrary = [];
+
 function addBookToLibrary() {
-    const newBook = new Book(titleForm.value, authorForm.value, pagesForm.value, genreForm, "reading");
+    const newBook = new Book(titleForm.value, authorForm.value, pagesForm.value, genreForm.value, statusForm.value);
     myLibrary.push(newBook);
 }
 
 addBtn.addEventListener("click", () => {
-    modal.style.display = "flex";
+    addBookModal.style.display = "flex";
 });
 
 submitBtn.addEventListener("click", (event) => {
     if(titleForm.checkValidity() && authorForm.checkValidity() && pagesForm.checkValidity()) {
         event.preventDefault();
-        modal.style.display = "none";
-        displayBook();
-        cleanForm();
+        addBookModal.style.display = "none";
+        addBookToLibrary();
+        displayBook(myLibrary[myLibrary.length - 1]);
+        clearForm();
     } 
 })
 
-const gridContainer = document.getElementById("grid-container");
-
-function displayBook() {
+function displayBook(book) {
     //div
     const bookDiv = document.createElement("div");
     bookDiv.setAttribute("id", "bookDiv");
     gridContainer.appendChild(bookDiv);
-    addBookToLibrary();
-
+    
     //title
-    const title = document.createElement("p");
+    const title = document.createElement("h1");
     title.classList.add("infos")
-    title.setAttribute("id", "bookTitle");
-    title.textContent = `"${titleForm.value}"`;
+    title.textContent = `"${book.title}"`;
     bookDiv.appendChild(title)
 
     //author
     const author = document.createElement("p");
     author.classList.add("infos")
-    author.textContent = `Author: ${authorForm.value}`;
+    author.textContent = `Author: ${book.author}`;
     bookDiv.appendChild(author)
 
     //pages
     const pages = document.createElement("p");
     pages.classList.add("infos")
-    pages.textContent = `Pages: ${pagesForm.value}`;
+    pages.textContent = `Pages: ${book.pages}`;
     bookDiv.appendChild(pages)
 
     //genre
     const genre = document.createElement("p");
     genre.classList.add("infos")
-    genre.textContent = `Genre: ${genreForm.value}`;
+    genre.textContent = `Genre: ${book.genre}`;
     bookDiv.appendChild(genre)
 
     //status
     const status = document.createElement("p");
     status.classList.add("infos");
-    status.textContent = `Status: ${statusForm.value}`;
+    status.textContent = `Status: ${book.status}`;
     bookDiv.appendChild(status);
 
     //buttons div
@@ -82,25 +85,31 @@ function displayBook() {
     bookDiv.appendChild(divBtn);
 
     //delete button
-    const deleteBtn = document.createElement("button");
+    const deleteBtn = document.createElement("button");    
     deleteBtn.classList.add("bookBtns");
-    deleteBtn.setAttribute("id", "deleteBtn");
+    deleteBtn.classList.add("deleteBtn");
     deleteBtn.innerHTML = '<img src= "imgs/delete-icon.png">';
     divBtn.appendChild(deleteBtn);
 
-    //modify button
+    //modify button 
     const modifyBtn = document.createElement("button");
     modifyBtn.classList.add("bookBtns");
-    modifyBtn.setAttribute("id", "modifyBtn");
+    modifyBtn.classList.add("modifyBtn");
     modifyBtn.innerHTML = '<img src= "imgs/modify-icon.png">'
     divBtn.appendChild(modifyBtn);
+
+    //Event listeners for buttons 
+    deleteBtn.addEventListener("click", () => {
+        deleteBook(title);
+    })
 }
 
-function cleanForm() {
-    titleForm.value = "";
-    authorForm.value = "";
-    pagesForm.value = "";
-    genreForm.value = "";
-    statusForm.value = "To read";
+function deleteBook(title) { //here i pass the title to find the book in the library by the title, and remove it 
+    title.parentNode.remove()
+    title.textContent = title.textContent.replaceAll('"', '') //to remove the "" for the filter() method
+    myLibrary = myLibrary.filter(book => book.title !== title.textContent);
 }
-  
+
+function clearForm() {
+   addBookForm.reset()
+}

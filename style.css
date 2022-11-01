@@ -72,6 +72,7 @@ footer {
     background-color: rgb(30, 29, 29);
     border-radius: 20px;   
     z-index: 1;
+    border: 2px solid black;
 }
 
 #modal-container h1 {
@@ -150,7 +151,7 @@ footer {
     font-size: 1.3rem;
 }
 
-#grid-container #bookTitle {
+#grid-container #bookDiv h1{
     font-size: 1.8rem;
     border-bottom: 1px solid white;
 }
@@ -169,11 +170,11 @@ footer {
     background: transparent;
 }
 
-#grid-container #deleteBtn {
+#grid-container .deleteBtn {
     border-bottom-left-radius: 20px;
 }
 
-#grid-container #modifyBtn {
+#grid-container .modifyBtn {
     border-bottom-right-radius: 20px;
 }
 
@@ -185,11 +186,11 @@ footer {
     visibility: visible;
 }
 
-#grid-container #bookDiv #deleteBtn:hover {
+#grid-container #bookDiv .deleteBtn:hover {
     background-color: rgb(255, 0, 0);
 }
 
-#grid-container #bookDiv #modifyBtn:hover {
+#grid-container #bookDiv .modifyBtn:hover {
     background-color: rgb(22, 164, 4);
 }
 
