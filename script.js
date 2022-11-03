@@ -29,12 +29,10 @@ function addBookToLibrary() {
     myLibrary.push(newBook);
 }
 
-let creatingNewBook = false;
 let displayedError = false;
 addBtn.addEventListener("click", () => {
     displayedError = false;
     addBookModal.style.display = "flex";
-    creatingNewBook = true;
 });
 
 //form functions 
@@ -44,11 +42,9 @@ submitBtn.addEventListener("click", (event) => {
         if(titleForm.checkValidity() && authorForm.checkValidity() && pagesForm.checkValidity()) {
             event.preventDefault();
             addBookModal.style.display = "none";
-            if(creatingNewBook) {
-                addBookToLibrary();
-                displayBook(myLibrary[myLibrary.length - 1]);
-                clearForm();
-            }
+            addBookToLibrary();
+            displayBook(myLibrary[myLibrary.length - 1]);
+            clearForm();
         }
     } 
     else {
