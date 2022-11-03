@@ -44,9 +44,11 @@ submitBtn.addEventListener("click", (event) => {
         if(titleForm.checkValidity() && authorForm.checkValidity() && pagesForm.checkValidity()) {
             event.preventDefault();
             addBookModal.style.display = "none";
-            addBookToLibrary();
-            displayBook(myLibrary[myLibrary.length - 1]);
-            clearForm();
+            if(creatingNewBook) {
+                addBookToLibrary();
+                displayBook(myLibrary[myLibrary.length - 1]);
+                clearForm();
+            }
         }
     } 
     else {
@@ -150,46 +152,47 @@ function displayBook(book) {
         title.textContent = title.textContent.replaceAll('"', '') //to remove the "" for the filter() method
         deleteBook(title);
     })
-    /*
+    
     modifyBtn.addEventListener("click", () => {
-        title.textContent = title.textContent.replaceAll('"', '') //to remove the "" for the filter() method
-        creatingNewBook = false;
-        displayModifyModal(title);
-    });*/
+        modifyStatus(status)
+    });
 }
+
+//delete button function
 
 function deleteBook(title) { //here i pass the title to find the book in the library by the title, and remove it from the library array
     title.parentNode.remove()
     myLibrary = myLibrary.filter(book => book.title !== title.textContent);
 }
-/*
-function displayModifyModal(title) {
-    const isThisBook = (book) => book.title === title.textContent;
-    let bookToModify = myLibrary.findIndex(isThisBook);
 
-    titleForm.value = myLibrary[bookToModify].title;
-    authorForm.value = myLibrary[bookToModify].author;
-    pagesForm.value = myLibrary[bookToModify].pages;
-    genreForm.value = myLibrary[bookToModify].genre;
-    statusForm.value = myLibrary[bookToModify].status;
-    addBookModal.style.display = "flex";
+//modify button function
 
-    submitBtn.addEventListener("click", () => {
-        modifyBook(bookToModify, title)
-    })
+function modifyStatus(status) {
+    let statusValue = "To Read";
+    if(status.textContent === "Status: To Read") {
+        status.textContent = "Status: Reading";
+        statusValue = "Reading";
+    }
+    else if(status.textContent === "Status: Reading") {
+        status.textContent = "Status: Finished";
+        statusValue = "Finished";
+    }
+    else if(status.textContent === "Status: Finished") {
+        status.textContent = "Status: Abandoned";
+        statusValue = "Abandoned";
+    }
+    else {
+        status.textContent = "Status: To Read";
+    }
+
+    let bookToModify;
+    for(book of myLibrary) {
+        if(book.title === status.parentNode.children[0].textContent.replaceAll('"', '')) {
+            bookToModify = book; 
+        }
+    }
+
+   bookToModify.status = statusValue;
 }
 
-function modifyBook(bookToModify, title) {
-    console.log(title)
-    myLibrary[bookToModify] = new Book(titleForm.value, authorForm.value, pagesForm.value, genreForm.value, statusForm.value);
-    const parent = title.parentNode;
-    parent.children[0].textContent = `"${myLibrary[bookToModify].title}"`
-    parent.children[1].textContent = `Author: ${myLibrary[bookToModify].author}`
-    parent.children[2].textContent = `Pages: ${myLibrary[bookToModify].pages}`
-    parent.children[3].textContent = `Genre: ${myLibrary[bookToModify].genre}`
-    parent.children[4].textContent = `Status: ${myLibrary[bookToModify].status}`
-
-    clearForm()
-}
-*/
 
