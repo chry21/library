@@ -1,12 +1,58 @@
 //Data structure
 
-function Book(title, author, pages, genre, status) {
-    this.title = title;
-    this.author = author;
-    this.genre = genre;
-    this.pages = pages;
-    this.status = status;
+class Book {
+    constructor(title, author, pages, genre, status) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.genre = genre;
+        this.status = status;
+    }
 }
+
+class Library {
+    constructor() {
+        this.myLibrary = [];
+    }
+
+    addBookToLibrary(newBook) {
+        if(!this.isAlreadyInLibrary(newBook)) {
+            addBookModal.style.display = "none";
+            this.myLibrary.push(newBook);
+            displayBook(library.lastBook);
+        }
+        else { 
+            displayErrorMsg();
+        }
+    }
+
+    isAlreadyInLibrary(newBook) {
+        return this.myLibrary.some((book) => book.title === newBook.title) 
+    }
+
+    modifyBookStatus(titleElement, statusElement) {
+        const options = ["To Read", "Reading", "Finished", "Abandoned"];
+        const title = titleElement.textContent.replaceAll('"', '');
+
+        let indexBookToModify = this.myLibrary.findIndex(book => book.title === title);
+        let currentStatusIndex = options.indexOf(this.myLibrary[indexBookToModify].status);
+
+        this.myLibrary[indexBookToModify].status = (currentStatusIndex === options.length-1) ? options[0] : options[currentStatusIndex+1];
+        statusElement.textContent = `Status: ${this.myLibrary[indexBookToModify].status}`;
+    }
+
+    deleteBook(title) { //here i pass the title to find the book in the library by the title, and remove it from the library array
+        title.parentNode.remove()
+        this.myLibrary = this.myLibrary.filter(book => book.title !== title.textContent);
+    }
+
+    get lastBook() {
+        return this.myLibrary[this.myLibrary.length - 1];
+    }
+}
+
+const library = new Library();
+
 
 //User interface
 
@@ -22,106 +68,94 @@ const genreForm = document.getElementById("genreForm")
 const statusForm = document.getElementById("statusForm")
 const submitBtn = document.getElementById("submitBtn")
 
-let myLibrary = [];
 
-function addBookToLibrary() {
-    const newBook = new Book(titleForm.value, authorForm.value, pagesForm.value, genreForm.value, statusForm.value);
-    myLibrary.push(newBook);
-}
-
-let displayedError = false;
 addBtn.addEventListener("click", () => {
-    displayedError = false;
     addBookModal.style.display = "flex";
+    clearForm();  
 });
+
+const getValuesFromInput = () => {
+    const title = titleForm.value;
+    const author = authorForm.value;
+    const pages = pagesForm.value;
+    const genre = genreForm.value;
+    const status = statusForm.value;
+
+    return new Book(title, author, pages, genre, status)
+}
 
 //form functions 
 
-submitBtn.addEventListener("click", (event) => {
-    if(!alreadyExists()) {
+submitBtn.addEventListener("click", (event) => {  
         if(titleForm.checkValidity() && authorForm.checkValidity() && pagesForm.checkValidity()) {
             event.preventDefault();
-            addBookModal.style.display = "none";
-            addBookToLibrary();
-            displayBook(myLibrary[myLibrary.length - 1]);
-            clearForm();
+            library.addBookToLibrary(getValuesFromInput());
         }
-    } 
-    else {
-        displayError()
-        displayedError = true;
-        event.preventDefault();
-    }
 })
 
-function alreadyExists() {
-    if(myLibrary.length > 0) {
-        for(book of myLibrary) {
-            if(book.title === titleForm.value) {
-                return true;
-            }
-        }
-    }
-    return false;
-}
+let displayedError = false;
 
-function displayError() {
+const displayErrorMsg = () => {
     if(!displayedError) {
-        error = document.createElement("p");
-        error.setAttribute("id", "errorMsg")
-        error.textContent = "This book already exists in the library!";
-        error.style.color = "red";
-        addBookModal.style.height = "400px"
-        addBookForm.appendChild(error)
+        const errorMsg = document.createElement("p");
+        errorMsg.setAttribute("id", "errorMsg");
+        errorMsg.textContent = "This book already exists in the library!";
+        errorMsg.style.color = "red";
+        addBookModal.style.height = "400px";
+        addBookForm.appendChild(errorMsg);
     }
+
+    displayedError = true;
 }
 
-function clearForm() {
+const clearForm = () => {
     if(displayedError) {
-        addBookModal.style.height = "370px"
-        document.getElementById("errorMsg").remove()
+        addBookModal.style.height = "370px";
+        document.getElementById("errorMsg").remove();
+        displayedError = false;
     }
-    addBookForm.reset()
+    
+    addBookForm.reset();
 }
 
 //Book's functions 
 
-function displayBook(book) {
+const displayBook = (book) => {
     //div
     const bookDiv = document.createElement("div");
     bookDiv.setAttribute("id", "bookDiv");
     gridContainer.appendChild(bookDiv);
     
     //title
-    const title = document.createElement("h1");
-    title.classList.add("infos")
-    title.setAttribute("id", "bookTitle")
-    title.textContent = `"${book.title}"`;
-    bookDiv.appendChild(title)
+    const titleElement = document.createElement("h1");
+    titleElement.classList.add("infos")
+    titleElement.setAttribute("id", "bookTitle")
+    titleElement.textContent = `"${book.title}"`;
+    bookDiv.appendChild(titleElement)
 
     //author
-    const author = document.createElement("p");
-    author.classList.add("infos")
-    author.textContent = `Author: ${book.author}`;
-    bookDiv.appendChild(author)
+    const authorElement = document.createElement("p");
+    authorElement.classList.add("infos")
+    authorElement.textContent = `Author: ${book.author}`;
+    bookDiv.appendChild(authorElement)
 
     //pages
-    const pages = document.createElement("p");
-    pages.classList.add("infos")
-    pages.textContent = `Pages: ${book.pages}`;
-    bookDiv.appendChild(pages)
+    const pagesElement = document.createElement("p");
+    pagesElement.classList.add("infos")
+    pagesElement.textContent = `Pages: ${book.pages}`;
+    bookDiv.appendChild(pagesElement)
 
     //genre
-    const genre = document.createElement("p");
-    genre.classList.add("infos")
-    genre.textContent = `Genre: ${book.genre}`;
-    bookDiv.appendChild(genre)
+    const genreElement = document.createElement("p");
+    genreElement.classList.add("infos")
+    genreElement.textContent = `Genre: ${book.genre}`;
+    bookDiv.appendChild(genreElement)
 
     //status
-    const status = document.createElement("p");
-    status.classList.add("infos");
-    status.textContent = `Status: ${book.status}`;
-    bookDiv.appendChild(status);
+    const statusElement = document.createElement("p");
+    statusElement.classList.add("infos");
+    statusElement.textContent = `Status: ${book.status}`;
+    bookDiv.appendChild(statusElement);
 
     //buttons div
     const divBtn = document.createElement("div")
@@ -145,50 +179,14 @@ function displayBook(book) {
     //Event listeners for buttons 
     
     deleteBtn.addEventListener("click", () => {
-        title.textContent = title.textContent.replaceAll('"', '') //to remove the "" for the filter() method
-        deleteBook(title);
+        titleElement.textContent = title.textContent.replaceAll('"', '') //to remove the "" for the filter() method
+        library.deleteBook(titleElement);
     })
     
     modifyBtn.addEventListener("click", () => {
-        modifyStatus(status)
+        library.modifyBookStatus(titleElement, statusElement)
     });
 }
 
-//delete button function
-
-function deleteBook(title) { //here i pass the title to find the book in the library by the title, and remove it from the library array
-    title.parentNode.remove()
-    myLibrary = myLibrary.filter(book => book.title !== title.textContent);
-}
-
-//modify button function
-
-function modifyStatus(status) {
-    let statusValue = "To Read";
-    if(status.textContent === "Status: To Read") {
-        status.textContent = "Status: Reading";
-        statusValue = "Reading";
-    }
-    else if(status.textContent === "Status: Reading") {
-        status.textContent = "Status: Finished";
-        statusValue = "Finished";
-    }
-    else if(status.textContent === "Status: Finished") {
-        status.textContent = "Status: Abandoned";
-        statusValue = "Abandoned";
-    }
-    else {
-        status.textContent = "Status: To Read";
-    }
-
-    let bookToModify;
-    for(book of myLibrary) {
-        if(book.title === status.parentNode.children[0].textContent.replaceAll('"', '')) {
-            bookToModify = book; 
-        }
-    }
-
-   bookToModify.status = statusValue;
-}
 
 
